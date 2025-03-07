@@ -37,4 +37,5 @@ func NewChain(in any, chain_blocks []string) (GenericChain, error) {
 }
 
 func (c *Chain) Execute() error {
+	panic("implement me")
 }
