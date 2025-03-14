@@ -1,0 +1,23 @@
+linters:
+  enable:
+    - staticcheck
+    - govet
+    - errcheck
+    - unused
+    - testifylint
+    - gocognit
+    - goconst
+    - gocyclo
+    - gosec
+    - iface
+    - importas
+    - reassign
+    - nilerr
+    - nilnil
+
+issues:
+  exclude-use-default: false
+
+run:
+  tests: true
+  concurrency: 4
