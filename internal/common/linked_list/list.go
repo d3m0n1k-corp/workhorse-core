@@ -21,13 +21,13 @@ type List[T comparable] interface {
 	Tail() *Node[T]
 }
 
-type baseList[T comparable] struct {
+type NonValidatedList[T comparable] struct {
 	head *Node[T]
 	tail *Node[T]
 	size int
 }
 
-func (l *baseList[T]) Append(value T) {
+func (l *NonValidatedList[T]) Append(value T) {
 	newNode := &Node[T]{
 		Value: value,
 		Next:  nil,
@@ -43,7 +43,7 @@ func (l *baseList[T]) Append(value T) {
 
 }
 
-func (l *baseList[T]) Prepend(value T) {
+func (l *NonValidatedList[T]) Prepend(value T) {
 	newNode := &Node[T]{
 		Value: value,
 		Next:  l.head,
@@ -53,7 +53,7 @@ func (l *baseList[T]) Prepend(value T) {
 	l.size++
 }
 
-func (l *baseList[T]) Remove(index int) error {
+func (l *NonValidatedList[T]) Remove(index int) error {
 	if index < 0 || index >= l.size {
 		return fmt.Errorf("index %d does not exist in the list of size %d", index, l.size)
 	}
@@ -85,7 +85,7 @@ func (l *baseList[T]) Remove(index int) error {
 
 	// Removing a node from the middle.
 	current := l.head
-	for i := 0; i < index; i++ {
+	for range index {
 		current = current.Next
 	}
 	if current == nil {
@@ -102,7 +102,7 @@ func (l *baseList[T]) Remove(index int) error {
 	return nil
 }
 
-func (l *baseList[T]) Find(value T) (int, error) {
+func (l *NonValidatedList[T]) Find(value T) (int, error) {
 	current := l.head
 	for i := range l.size {
 		if current.Value == value {
@@ -113,24 +113,24 @@ func (l *baseList[T]) Find(value T) (int, error) {
 	return -1, fmt.Errorf("value %v not found in the list", value)
 }
 
-func (l *baseList[T]) Length() int {
+func (l *NonValidatedList[T]) Length() int {
 	return l.size
 }
 
-func (l *baseList[T]) Validate() error {
+func (l *NonValidatedList[T]) Validate() error {
 	panic("TODO: Implement")
 }
 
-func (b *baseList[T]) Head() *Node[T] {
+func (b *NonValidatedList[T]) Head() *Node[T] {
 	return b.head
 }
 
-func (b *baseList[T]) Tail() *Node[T] {
+func (b *NonValidatedList[T]) Tail() *Node[T] {
 	return b.tail
 }
 
 func NewList[T comparable]() List[T] {
-	return &baseList[T]{
+	return &NonValidatedList[T]{
 		head: nil,
 		tail: nil,
 		size: 0,

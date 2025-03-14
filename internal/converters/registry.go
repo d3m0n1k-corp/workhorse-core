@@ -2,24 +2,33 @@ package converters
 
 import (
 	"errors"
-	"workhorse-core/internal/converters/basec"
 )
 
-var registry = make(map[string]basec.BaseConverter)
+type Registration struct {
+	Name        string
+	DemoInput   any
+	Description string
+	Config      BaseConfig
+	InputType   string
+	OutputType  string
+	Constructor func(config BaseConfig) BaseConverter
+}
 
-func Register(name string, converter basec.BaseConverter) error {
-	var _, exists = registry[name]
+var registry = make(map[string]Registration)
+
+func Register(reg Registration) error {
+	var _, exists = registry[reg.Name]
 	if exists {
-		panic("Converter " + name + " already registered")
+		panic("Converter " + reg.Name + " already registered")
 	}
-	registry[name] = converter
+	registry[reg.Name] = reg
 	return nil
 }
 
-func GetConverter(name string) (basec.BaseConverter, error) {
-	val := registry[name]
-	if val == nil {
+func GetRegistration(name string) (*Registration, error) {
+	val, ok := registry[name]
+	if !ok {
 		return nil, errors.New("Converter " + name + " not found")
 	}
-	return val, nil
+	return &val, nil
 }
