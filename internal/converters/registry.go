@@ -3,13 +3,14 @@ package converters
 import (
 	"encoding/json"
 	"errors"
+	"reflect"
 )
 
 type Registration struct {
 	Name        string
 	DemoInput   any
 	Description string
-	Config      BaseConfig
+	Config      reflect.Type
 	InputType   string
 	OutputType  string
 	Constructor func(config BaseConfig) BaseConverter
@@ -39,12 +40,16 @@ func NewConverter(name string, config_str string) (BaseConverter, error) {
 	if err != nil {
 		return nil, err
 	}
-	var config BaseConfig
-	err = json.Unmarshal([]byte(config_str), &config)
+	var instance = reflect.New(reg.Config).Interface()
+	err = json.Unmarshal([]byte(config_str), &instance)
 	if err != nil {
 		return nil, err
 	}
 
+	config, ok := instance.(BaseConfig)
+	if !ok {
+		return nil, errors.New("Invalid config type")
+	}
 	err = config.Validate()
 	if err != nil {
 		return nil, err
