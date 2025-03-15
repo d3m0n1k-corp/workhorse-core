@@ -1,3 +1,4 @@
+release : clean wasm
 wasm: clean
 	@echo "Building WASM for $(OS)"
 ifeq ($(OS),Windows_NT)
@@ -15,3 +16,15 @@ ifeq ($(OS),Windows_NT)
 else
 	@rm -rf out
 endif
+
+lint:
+	@echo "Linting WASM for $(OS)"
+	@golangci-lint run ./...
+
+test:
+	@echo "Testing WASM for $(OS)"
+	@go test ./...
+
+ci:
+	@echo "Testing WASM for $(OS)"
+	@go test -coverprofile="coverage.txt" ./...
