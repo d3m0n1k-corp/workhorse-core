@@ -7,5 +7,5 @@ type BaseConverter interface {
 }
 
 type BaseConfig interface {
-	Validate(in map[string]any) error
+	Validate() error
 }
