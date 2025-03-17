@@ -1,4 +1,7 @@
+.PHONY: release wasm clean lint test ci cov
+
 release : clean wasm
+
 wasm: clean
 	@echo "Building WASM for $(OS)"
 ifeq ($(OS),Windows_NT)
@@ -23,8 +26,13 @@ lint:
 
 test:
 	@echo "Testing WASM for $(OS)"
-	@go test ./...
+	@go test -coverprofile=coverage.out -covermode=atomic ./...
 
 ci:
 	@echo "Testing WASM for $(OS)"
 	@go test -coverprofile="coverage.txt" ./...
+
+cov: test
+	@echo "Generating coverage report"
+	@go install github.com/boumenot/gocover-cobertura@latest
+	@gocover-cobertura < coverage.out > cov.xml

@@ -1,6 +1,7 @@
 package json_prettifier
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -40,4 +41,14 @@ func TestApply_whenValidTabs_returnPrettyJson(t *testing.T) {
 	require.NoError(t, err)
 	expected := "{\n\t\"a\": 1,\n\t\"b\": 2\n}"
 	require.Equal(t, expected, string(output.([]byte)))
+}
+
+func TestApply_whenMarshalError_returnError(t *testing.T) {
+	mockableJsonMarshalIndent = func(v interface{}, prefix, indent string) ([]byte, error) {
+		return nil, fmt.Errorf("Marshal error")
+	}
+	j := JsonPrettifier{config: JsonPrettifierConfig{IndentSize: 1, IndentType: "tab"}}
+	input := []byte(`{"a":1,"b":2}`)
+	_, err := j.Apply(input)
+	require.Error(t, err)
 }
