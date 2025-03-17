@@ -6,6 +6,8 @@ import (
 	"workhorse-core/internal/common/types"
 )
 
+var mockableJsonMarshalIndent = json.MarshalIndent
+
 type JsonPrettifier struct {
 	config JsonPrettifierConfig
 }
@@ -33,7 +35,7 @@ func (j *JsonPrettifier) Apply(input any) (any, error) {
 		indent = strings.Repeat("\t", j.config.IndentSize)
 	}
 
-	pretty_json, err := json.MarshalIndent(inp_json, "", indent)
+	pretty_json, err := mockableJsonMarshalIndent(inp_json, "", indent)
 	if err != nil {
 		return nil, err
 	}

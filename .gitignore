@@ -1,1 +1,4 @@
 out/
+cov.xml
+coverage.out
+coverage.txt

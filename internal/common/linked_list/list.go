@@ -41,6 +41,8 @@ func (l *NonValidatedList[T]) Append(value T) {
 		return
 	}
 
+	l.tail.Next = newNode
+	l.tail = newNode
 }
 
 func (l *NonValidatedList[T]) Prepend(value T) {
@@ -48,9 +50,17 @@ func (l *NonValidatedList[T]) Prepend(value T) {
 		Value: value,
 		Next:  l.head,
 	}
-
-	l.head = newNode
 	l.size++
+
+	if l.head == nil {
+		l.head = newNode
+		l.tail = newNode
+		return
+	}
+
+	l.head.Prev = newNode
+	l.head = newNode
+
 }
 
 func (l *NonValidatedList[T]) Remove(index int) error {
@@ -87,9 +97,6 @@ func (l *NonValidatedList[T]) Remove(index int) error {
 	current := l.head
 	for range index {
 		current = current.Next
-	}
-	if current == nil {
-		return fmt.Errorf("unexpected nil node at index %d", index)
 	}
 	// Update the previous and next nodes to bypass the current one.
 	if current.Prev != nil {
