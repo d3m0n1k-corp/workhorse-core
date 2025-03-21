@@ -6,6 +6,8 @@ import (
 	"workhorse-core/internal/converters"
 )
 
+var mockableListConverters = converters.ListConverters
+
 type ItemConfig struct {
 	Type string `json:"type"`
 	Name string `json:"name"`
@@ -26,7 +28,7 @@ func extractConfTypes(t reflect.Type) []*ItemConfig {
 	for i := range numFields {
 		field := t.Field(i)
 		conf := ItemConfig{
-			Name: field.Name,
+			Name: field.Tag.Get("json"),
 			Type: field.Type.String(),
 		}
 		confs = append(confs, &conf)
@@ -35,7 +37,7 @@ func extractConfTypes(t reflect.Type) []*ItemConfig {
 }
 
 func ListConvertersInJSON() []*RegisteredItem {
-	conv_list := converters.ListConverters()
+	conv_list := mockableListConverters()
 	var reg_list []*RegisteredItem
 	for _, reg := range conv_list {
 
