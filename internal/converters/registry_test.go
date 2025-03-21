@@ -115,3 +115,12 @@ func TestNewConverter_whenValidConfig_returnConverter(t *testing.T) {
 	require.NoError(t, err)
 	delete(registry, reg.Name)
 }
+
+func TestListConverters(t *testing.T) {
+	registry = make(map[string]*Registration)
+	registry["test"] = &Registration{Name: "test"}
+
+	converters := ListConverters()
+	require.Len(t, converters, 1)
+	require.Equal(t, "test", converters[0].Name)
+}

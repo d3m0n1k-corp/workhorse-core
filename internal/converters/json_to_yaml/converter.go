@@ -10,6 +10,8 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+var mockableYamlMarshal = yaml.Marshal
+
 type JsonToYamlConverter struct {
 	config JsonToYamlConfig
 }
@@ -25,7 +27,7 @@ func (j *JsonToYamlConverter) Apply(input any) (any, error) {
 	if err != nil {
 		return nil, err
 	}
-	out, err := yaml.Marshal(data)
+	out, err := mockableYamlMarshal(data)
 	if err != nil {
 		return nil, err
 	}
