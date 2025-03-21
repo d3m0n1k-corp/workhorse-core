@@ -4,36 +4,18 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"syscall/js"
+	"workhorse-core/app"
 )
 
-func errorOut(errors []error) js.Value {
-	vs := make([]any, 0, len(errors))
-
-	for _, r := range errors {
-		vs = append(vs, string(r.Error()))
+func list_connectors(this js.Value, args []js.Value) any {
+	response_object := Response{
+		Result: app.ListConvertersInJSON(),
+		Error:  nil,
 	}
-	return js.ValueOf(vs)
-}
-
-func run(this js.Value, args []js.Value) any {
-	errors := []error{}
-	var t any
-	fmt.Printf("args: %v\n", args)
-	fmt.Printf("this: %v\n", this)
-
-	err := json.Unmarshal([]byte(args[0].String()), &t)
-
+	resp_json, err := json.Marshal(response_object)
 	if err != nil {
-		return errorOut(append(errors, fmt.Errorf("Null JSON")))
+		panic(err)
 	}
-
-	_, ok := t.(map[string]any)
-
-	if !ok {
-		return errorOut(append(errors, fmt.Errorf("Invalid JSON")))
-	}
-
-	return errorOut(errors)
+	return js.ValueOf(string(resp_json))
 }

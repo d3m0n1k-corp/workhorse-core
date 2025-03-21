@@ -16,9 +16,9 @@ type Registration struct {
 	Constructor func(config BaseConfig) BaseConverter
 }
 
-var registry = make(map[string]Registration)
+var registry = make(map[string]*Registration)
 
-func Register(reg Registration) any {
+func Register(reg *Registration) any {
 	var _, exists = registry[reg.Name]
 	if exists {
 		panic("Converter " + reg.Name + " already registered")
@@ -32,7 +32,7 @@ func GetRegistration(name string) (*Registration, error) {
 	if !ok {
 		return nil, errors.New("Converter " + name + " not found")
 	}
-	return &val, nil
+	return val, nil
 }
 
 func NewConverter(name string, config_str string) (BaseConverter, error) {
@@ -56,4 +56,12 @@ func NewConverter(name string, config_str string) (BaseConverter, error) {
 	}
 
 	return reg.Constructor(config), nil
+}
+
+func ListConverters() []*Registration {
+	var result []*Registration
+	for _, val := range registry {
+		result = append(result, val)
+	}
+	return result
 }
