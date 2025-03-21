@@ -3,6 +3,7 @@ package json_prettifier
 import (
 	"fmt"
 	"testing"
+	"workhorse-core/internal/common/types"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -10,12 +11,12 @@ import (
 
 func TestInputType_returnType(t *testing.T) {
 	j := JsonPrettifier{}
-	assert.Equal(t, "json", j.InputType())
+	assert.Equal(t, types.JSON, j.InputType())
 }
 
 func TestOutputType_returnType(t *testing.T) {
 	j := JsonPrettifier{}
-	assert.Equal(t, "json", j.OutputType())
+	assert.Equal(t, types.JSON, j.OutputType())
 }
 
 func TestApply_whenValidSpaces_returnPrettyJson(t *testing.T) {

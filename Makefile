@@ -2,7 +2,7 @@
 
 release : clean wasm
 
-wasm: clean
+wasm:
 	@echo "Building WASM for $(OS)"
 ifeq ($(OS),Windows_NT)
 	@if not exist out\wasm @mkdir out\wasm
@@ -10,6 +10,16 @@ ifeq ($(OS),Windows_NT)
 else
 	@mkdir -p out/wasm
 	@GOOS=js GOARCH=wasm go build -o out/wasm/  ./api/workhorse.wasm/...
+endif
+
+build: clean
+	@echo "Building All for $(OS)"
+ifeq ($(OS),Windows_NT)
+	@if not exist out @mkdir out
+	@go build -o out/ ./...
+else
+	@mkdir -p out/wasm
+	@go build -o out/  ./...
 endif
 
 clean:
