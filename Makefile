@@ -1,5 +1,6 @@
-.PHONY: release wasm clean lint test ci cov
+.PHONY: release wasm build clean lint test ci cov
 
+all : clean build wasm 
 release : clean wasm
 
 wasm:
