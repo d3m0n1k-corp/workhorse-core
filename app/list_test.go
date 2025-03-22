@@ -40,6 +40,6 @@ func TestListConverters(t *testing.T) {
 		}
 	}
 
-	reg_list := ListConvertersInJSON()
+	reg_list := ListConverters()
 	require.Len(t, reg_list, 1)
 }

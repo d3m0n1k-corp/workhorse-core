@@ -36,7 +36,7 @@ func extractConfTypes(t reflect.Type) []*ItemConfig {
 	return confs
 }
 
-func ListConvertersInJSON() []*RegisteredItem {
+func ListConverters() []*RegisteredItem {
 	conv_list := mockableListConverters()
 	var reg_list []*RegisteredItem
 	for _, reg := range conv_list {

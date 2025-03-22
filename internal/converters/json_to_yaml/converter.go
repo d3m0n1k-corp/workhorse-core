@@ -3,9 +3,7 @@ package json_to_yaml
 import (
 	"encoding/json"
 	"fmt"
-	"reflect"
 	"workhorse-core/internal/common/types"
-	"workhorse-core/internal/converters"
 
 	"gopkg.in/yaml.v3"
 )
@@ -41,14 +39,3 @@ func (j *JsonToYamlConverter) InputType() string {
 func (j *JsonToYamlConverter) OutputType() string {
 	return types.YAML
 }
-
-var _ = converters.Register(&converters.Registration{
-	Name:      "json_to_yaml",
-	DemoInput: []byte(`{"a":1,"b":2}`),
-	Description: `
-JsonToYamlConverter is a converter that takes a JSON input and returns a YAML output.
-`,
-	Config:     reflect.TypeOf(JsonToYamlConfig{}),
-	InputType:  types.JSON,
-	OutputType: types.YAML,
-})

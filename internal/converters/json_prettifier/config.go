@@ -13,7 +13,7 @@ type JsonPrettifierConfig struct {
 	IndentType string `json:"indent_type" validate:"required,oneof=space tab"`
 }
 
-func (j *JsonPrettifierConfig) Validate() error {
+func (j JsonPrettifierConfig) Validate() error {
 	err := vd.Struct(j)
 	if err != nil {
 		return err

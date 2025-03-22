@@ -2,10 +2,8 @@ package json_prettifier
 
 import (
 	"encoding/json"
-	"reflect"
 	"strings"
 	"workhorse-core/internal/common/types"
-	"workhorse-core/internal/converters"
 )
 
 var mockableJsonMarshalIndent = json.MarshalIndent
@@ -43,14 +41,3 @@ func (j *JsonPrettifier) Apply(input any) (any, error) {
 	}
 	return pretty_json, nil
 }
-
-var _ = converters.Register(&converters.Registration{
-	Name:      "json_prettifier",
-	DemoInput: []byte(`{"a":1,"b":2}`),
-	Description: `
-JsonPrettifier is a converter that takes a JSON input and returns a pretty-printed JSON output.
-`,
-	Config:     reflect.TypeOf(JsonPrettifierConfig{}),
-	InputType:  types.JSON,
-	OutputType: types.JSON,
-})
