@@ -23,7 +23,7 @@ func registerLogger() {
 }
 
 func registerFunctions() {
-	js.Global().Set("list_connectors", js.FuncOf(operations.List_connectors))
+	js.Global().Set("list_connectors", js.FuncOf(operations.List_converters))
 	js.Global().Set("execute_converter", js.FuncOf(operations.Execute_converter))
 	js.Global().Get("console").Call("log", "WASM Initialized and Ready")
 }
