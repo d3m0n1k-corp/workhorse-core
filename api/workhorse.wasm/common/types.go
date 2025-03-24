@@ -1,6 +1,4 @@
-//go:build js && wasm
-
-package main
+package common
 
 type Response struct {
 	Error  *string
