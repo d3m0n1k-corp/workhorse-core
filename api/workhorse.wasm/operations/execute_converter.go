@@ -11,7 +11,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func Execute_converter(this js.Value, args []js.Value) any {
+func ExecuteConverter(this js.Value, args []js.Value) any {
 	if len(args) != 3 {
 		logrus.Error("execute_converter: invalid number of arguments")
 		panic("execute_converter: invalid number of arguments")

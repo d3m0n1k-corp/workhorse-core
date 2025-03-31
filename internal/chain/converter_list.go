@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"workhorse-core/internal/common/linked_list"
 	"workhorse-core/internal/converters"
+
+	"github.com/sirupsen/logrus"
 )
 
 var mockableNewConverterFunc = converters.NewConverter
@@ -36,6 +38,7 @@ func (cl *ConverterList) Validate() error {
 func NewConverterListFromJSON(chainLinks []ConverterChainLink) (*ConverterList, error) {
 	cl := &ConverterList{}
 	for _, link := range chainLinks {
+		logrus.Tracef("Creating converter %s with config %s", link.Name, link.ConfigJSON)
 		c, err := mockableNewConverterFunc(link.Name, link.ConfigJSON)
 		if err != nil {
 			return nil, err

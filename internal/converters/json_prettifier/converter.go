@@ -21,9 +21,9 @@ func (j *JsonPrettifier) OutputType() string {
 }
 
 func (j *JsonPrettifier) Apply(input any) (any, error) {
-	inp_str := input.([]byte)
+	inp_str := input.(string)
 	var inp_json any
-	err := json.Unmarshal(inp_str, &inp_json)
+	err := json.Unmarshal([]byte(inp_str), &inp_json)
 	if err != nil {
 		return nil, err
 	}
@@ -39,5 +39,5 @@ func (j *JsonPrettifier) Apply(input any) (any, error) {
 	if err != nil {
 		return nil, err
 	}
-	return pretty_json, nil
+	return string(pretty_json), nil
 }

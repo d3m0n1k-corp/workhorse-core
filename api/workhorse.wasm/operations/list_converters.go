@@ -9,7 +9,7 @@ import (
 	"workhorse-core/app"
 )
 
-func List_converters(this js.Value, args []js.Value) any {
+func ListConverters(this js.Value, args []js.Value) any {
 	connList := app.ListConverters()
 	// l.GlobalStream.Logf("Found %d connectors", len(connList))
 	response_object := common.Response{

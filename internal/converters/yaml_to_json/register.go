@@ -15,4 +15,7 @@ YamlToJsonConverter is a converter that takes a YAML input and returns a JSON ou
 	Config:     reflect.TypeOf(YamlToJsonConfig{}),
 	InputType:  types.YAML,
 	OutputType: types.JSON,
+	Constructor: func(config converters.BaseConfig) converters.BaseConverter {
+		return &YamlToJsonConverter{config: *config.(*YamlToJsonConfig)}
+	},
 })

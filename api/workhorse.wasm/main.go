@@ -19,12 +19,13 @@ func main() {
 func registerLogger() {
 	writer := logging.JsLogWriter{}
 	logrus.SetOutput(writer)
-	logrus.SetLevel(logrus.InfoLevel)
+	logrus.SetLevel(logrus.TraceLevel)
 }
 
 func registerFunctions() {
-	js.Global().Set("list_converters", js.FuncOf(operations.List_converters))
-	js.Global().Set("execute_converter", js.FuncOf(operations.Execute_converter))
+	js.Global().Set("list_converters", js.FuncOf(operations.ListConverters))
+	js.Global().Set("execute_converter", js.FuncOf(operations.ExecuteConverter))
+	js.Global().Set("chain_execute", js.FuncOf(operations.ChainExecute))
 	js.Global().Get("console").Call("log", "WASM Initialized and Ready")
 }
 

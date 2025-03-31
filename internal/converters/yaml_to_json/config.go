@@ -13,7 +13,7 @@ type YamlToJsonConfig struct {
 	IndentType string `json:"indent_type" validate:"required,oneof=space tab"`
 }
 
-func (y *YamlToJsonConfig) Validate() error {
+func (y YamlToJsonConfig) Validate() error {
 	err := vd.Struct(y)
 	if err != nil {
 		return err
