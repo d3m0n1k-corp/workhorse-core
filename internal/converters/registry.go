@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"reflect"
+
+	"github.com/sirupsen/logrus"
 )
 
 type Registration struct {
@@ -21,7 +23,7 @@ var registry = make(map[string]*Registration)
 func Register(reg *Registration) any {
 	var _, exists = registry[reg.Name]
 	if exists {
-		panic("Converter " + reg.Name + " already registered")
+		logrus.Fatalf("Converter %s already registered", reg.Name)
 	}
 	registry[reg.Name] = reg
 	return nil

@@ -3,7 +3,6 @@
 package operations
 
 import (
-	"encoding/json"
 	"syscall/js"
 	"workhorse-core/api/workhorse.wasm/common"
 	"workhorse-core/app"
@@ -13,8 +12,13 @@ import (
 
 func ExecuteConverter(this js.Value, args []js.Value) any {
 	if len(args) != 3 {
-		logrus.Error("execute_converter: invalid number of arguments")
-		panic("execute_converter: invalid number of arguments")
+		err_str := "execute_converter: invalid number of arguments"
+		logrus.Error(err_str)
+		return jsOf(common.Response{
+			Result: nil,
+			Error:  &err_str,
+		})
+
 	}
 	name := args[0].String()
 	input := args[1].String()
@@ -28,13 +32,8 @@ func ExecuteConverter(this js.Value, args []js.Value) any {
 	if err != nil {
 		err_str = err.Error()
 	}
-	response_object := common.Response{
+	return jsOf(common.Response{
 		Result: result,
 		Error:  &err_str,
-	}
-	resp_json, err := json.Marshal(response_object)
-	if err != nil {
-		panic(err)
-	}
-	return js.ValueOf(string(resp_json))
+	})
 }
