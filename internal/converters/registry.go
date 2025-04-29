@@ -23,7 +23,9 @@ var registry = make(map[string]*Registration)
 func Register(reg *Registration) any {
 	var _, exists = registry[reg.Name]
 	if exists {
-		logrus.Fatalf("Converter %s already registered", reg.Name)
+		err_str := "Converter " + reg.Name + " already registered"
+		logrus.Error(err_str)
+		panic(err_str)
 	}
 	registry[reg.Name] = reg
 	return nil
