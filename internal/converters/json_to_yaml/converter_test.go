@@ -32,7 +32,7 @@ func TestApply_ifInputIsInvalidJson_returnError(t *testing.T) {
 }
 
 func TestApply_ifYamlMarshalFails_returnError(t *testing.T) {
-	mockableYamlMarshal = func(interface{}) ([]byte, error) {
+	mockableYamlMarshal = func(any) ([]byte, error) {
 		return nil, assert.AnError
 	}
 	defer func() {

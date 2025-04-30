@@ -1,6 +1,7 @@
 package yaml_to_json
 
 import (
+	"encoding/json"
 	"testing"
 	"workhorse-core/internal/common/types"
 
@@ -34,6 +35,9 @@ func TestApply_whenJsonMarshalIndentFails_returnError(t *testing.T) {
 	mockableJsonMarshalIndent = func(_ any, _, _ string) ([]byte, error) {
 		return nil, assert.AnError
 	}
+	defer func() {
+		mockableJsonMarshalIndent = json.MarshalIndent
+	}()
 	y := YamlToJsonConverter{}
 	_, err := y.Apply("a: 1")
 	require.Error(t, err)
@@ -43,6 +47,9 @@ func TestApply_whenValidInput_returnJsonString(t *testing.T) {
 	mockableJsonMarshalIndent = func(_ any, _, _ string) ([]byte, error) {
 		return []byte(`{"a": 1}`), nil
 	}
+	defer func() {
+		mockableJsonMarshalIndent = json.MarshalIndent
+	}()
 	y := YamlToJsonConverter{
 		config: YamlToJsonConfig{
 			IndentType: "space",
