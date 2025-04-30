@@ -1,26 +1,16 @@
-.PHONY: release wasm build clean lint test ci cov
+.PHONY: release wasm clean lint test ci cov
 
-all : clean build wasm 
+all : clean wasm 
 release : clean wasm
 
 wasm:
-	@echo "Building WASM for $(OS)"
+	@echo "Building WASM for js"
 ifeq ($(OS),Windows_NT)
 	@if not exist out\wasm @mkdir out\wasm
 	@set "GOOS=js" && set "GOARCH=wasm" && go build -o out/wasm/ ./api/workhorse.wasm/...
 else
 	@mkdir -p out/wasm
 	@GOOS=js GOARCH=wasm go build -o out/wasm/  ./api/workhorse.wasm/...
-endif
-
-build: clean
-	@echo "Building All for $(OS)"
-ifeq ($(OS),Windows_NT)
-	@if not exist out @mkdir out
-	@go build -o out/ ./...
-else
-	@mkdir -p out/wasm
-	@go build -o out/  ./...
 endif
 
 clean:
