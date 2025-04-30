@@ -52,6 +52,13 @@ func TestApply_when2ndMarshalError_returnError(t *testing.T) {
 	}()
 
 	JsonStringifier := JsonStringifier{}
-	_, err := JsonStringifier.Apply(`{"a":1`)
+	_, err := JsonStringifier.Apply(`{"a":1}`)
 	require.Error(t, err)
+}
+
+func TestApply_whenValidInput_returnStringifiedJson(t *testing.T) {
+	JsonStringifier := JsonStringifier{}
+	result, err := JsonStringifier.Apply(`{"a":1}`)
+	require.NoError(t, err)
+	require.Equal(t, `"{\"a\":1}"`, result)
 }
