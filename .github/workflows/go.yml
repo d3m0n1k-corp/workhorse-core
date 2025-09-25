@@ -24,22 +24,21 @@ jobs:
 
       - name: Build WASM
         run: |
-          mkdir -p dist
-          GOOS=js GOARCH=wasm go build -o dist/workhorse.wasm ./cmd/workhorse
-          ls -lh dist
+          make release
+          ls -lh out
 
       - name: Generate SHA256 checksum
         id: checksum
         run: |
-          sha256sum dist/workhorse.wasm | tee dist/workhorse.wasm.sha256
-          echo "hash=$(sha256sum dist/workhorse.wasm | awk '{print $1}')" >> $GITHUB_OUTPUT
+          sha256sum out/workhorse.wasm | tee out/workhorse.wasm.sha256
+          echo "hash=$(sha256sum out/workhorse.wasm | awk '{print $1}')" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release (Draft)
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            dist/workhorse.wasm
-            dist/workhorse.wasm.sha256
+            out/workhorse.wasm
+            out/workhorse.wasm.sha256
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
           body: |
