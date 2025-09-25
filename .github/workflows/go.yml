@@ -4,6 +4,9 @@ on:
   push:
     tags: ["v*"] # Triggers when a version tag (e.g., v1.0.0) is pushed
   workflow_dispatch:
+  
+permissions:
+  contents: write 
 
 jobs:
   build:
@@ -73,4 +76,4 @@ jobs:
           draft: false
           prerelease: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
