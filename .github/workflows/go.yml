@@ -26,6 +26,8 @@ jobs:
         run: |
           mkdir -p out
           make release
+          mv out/wasm/workhorse.wasm out/workhorse.wasm
+
           ls -lh out
 
       - name: Generate SHA256 checksum
