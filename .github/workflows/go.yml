@@ -27,6 +27,7 @@ jobs:
           mkdir -p out
           make release
           mv out/wasm/workhorse.wasm out/workhorse.wasm
+          rm -r out/wasm
 
           ls -lh out
 
