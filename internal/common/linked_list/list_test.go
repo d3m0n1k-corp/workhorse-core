@@ -92,9 +92,18 @@ func TestTail_whenCalled_ReturnTail(t *testing.T) {
 	require.Equal(t, node, list.Tail())
 }
 
-func TestValidate_whenCalled_Panic(t *testing.T) {
+func TestValidate_whenEmptyList_returnNil(t *testing.T) {
 	list := NonValidatedList[int]{}
-	require.Panics(t, func() { _ = list.Validate() })
+	err := list.Validate()
+	require.NoError(t, err)
+}
+
+func TestValidate_whenValidList_returnNil(t *testing.T) {
+	list := NonValidatedList[int]{}
+	list.Append(1)
+	list.Append(2)
+	err := list.Validate()
+	require.NoError(t, err)
 }
 
 func TestNewList_whenCalled_ReturnList(t *testing.T) {

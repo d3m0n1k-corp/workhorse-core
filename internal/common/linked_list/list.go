@@ -125,7 +125,50 @@ func (l *NonValidatedList[T]) Length() int {
 }
 
 func (l *NonValidatedList[T]) Validate() error {
-	panic("TODO: Implement")
+	if l.size == 0 {
+		return nil // Empty list is valid
+	}
+
+	// Validate size consistency
+	actualSize := 0
+	current := l.head
+	for current != nil {
+		actualSize++
+		if actualSize > l.size {
+			return fmt.Errorf("list size inconsistent: actual size exceeds recorded size %d", l.size)
+		}
+		current = current.Next
+	}
+
+	if actualSize != l.size {
+		return fmt.Errorf("list size inconsistent: recorded size %d, actual size %d", l.size, actualSize)
+	}
+
+	// Validate head/tail consistency
+	if l.size == 1 {
+		if l.head != l.tail {
+			return fmt.Errorf("single-item list head/tail inconsistency")
+		}
+		if l.head.Next != nil || l.head.Prev != nil {
+			return fmt.Errorf("single-item list should have nil Next/Prev pointers")
+		}
+	}
+
+	// Validate forward/backward link consistency
+	current = l.head
+	for current != nil && current.Next != nil {
+		if current.Next.Prev != current {
+			return fmt.Errorf("forward/backward link inconsistency detected")
+		}
+		current = current.Next
+	}
+
+	// Validate that we end at tail
+	if current != l.tail {
+		return fmt.Errorf("forward traversal doesn't end at tail")
+	}
+
+	return nil
 }
 
 func (b *NonValidatedList[T]) Head() *Node[T] {

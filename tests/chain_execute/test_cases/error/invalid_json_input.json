@@ -1,0 +1,17 @@
+{
+    "name": "invalid_json_input",
+    "description": "Error case: Invalid JSON input to json_prettifier",
+    "input": "{\"name\":\"test\",\"value\":}",
+    "chain": [
+        {
+            "name": "json_prettifier",
+            "config_json": "{\"indent_type\":\"space\",\"indent_size\":2}"
+        }
+    ],
+    "expected_responses": [
+        {
+            "output": null,
+            "error": "invalid character '}' looking for beginning of value"
+        }
+    ]
+}

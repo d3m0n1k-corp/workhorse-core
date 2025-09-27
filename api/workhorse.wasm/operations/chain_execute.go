@@ -4,6 +4,7 @@ package operations
 
 import (
 	"encoding/json"
+	"fmt"
 	"syscall/js"
 	"workhorse-core/api/workhorse.wasm/common"
 	"workhorse-core/app"
@@ -12,33 +13,45 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func jsOf(value common.Response) js.Value {
-	resp_json, err := json.Marshal(value)
-	if err != nil {
-		logrus.Error("chain_execute: failed to marshal response")
-		panic(err)
-	}
-	return js.ValueOf(string(resp_json))
-}
-
 func ChainExecute(this js.Value, args []js.Value) any {
 	if len(args) != 2 {
 		err_str := "chain_execute: invalid number of arguments, expected 2"
 		logrus.Error(err_str)
-		return jsOf(common.Response{
+		return common.JsOf(common.Response{
 			Result: nil,
 			Error:  &err_str,
 		})
 	}
+
 	chainLinks := args[0].String()
+	if chainLinks == "" {
+		err_str := "chain_execute: chain links cannot be empty"
+		logrus.Error(err_str)
+		return common.JsOf(common.Response{
+			Result: nil,
+			Error:  &err_str,
+		})
+	}
+
 	input := args[1].String()
+	// Note: input can be empty for some converters
+
 	var request []chain.ConverterChainLink
 	err := json.Unmarshal([]byte(chainLinks), &request)
 
 	if err != nil {
-		err_str := "chain_execute: invalid request format"
+		err_str := fmt.Sprintf("chain_execute: invalid JSON format for chain links: %v", err)
 		logrus.Error(err_str)
-		return jsOf(common.Response{
+		return common.JsOf(common.Response{
+			Result: nil,
+			Error:  &err_str,
+		})
+	}
+
+	if len(request) == 0 {
+		err_str := "chain_execute: chain links array cannot be empty"
+		logrus.Error(err_str)
+		return common.JsOf(common.Response{
 			Result: nil,
 			Error:  &err_str,
 		})
@@ -52,7 +65,7 @@ func ChainExecute(this js.Value, args []js.Value) any {
 	if err != nil {
 		err_str = err.Error()
 	}
-	return jsOf(common.Response{
+	return common.JsOf(common.Response{
 		Result: result,
 		Error:  &err_str,
 	})

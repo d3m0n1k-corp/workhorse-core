@@ -2,11 +2,8 @@ package yaml_to_json
 
 import (
 	"fmt"
-
-	"github.com/go-playground/validator/v10"
+	"workhorse-core/internal/common/validation"
 )
-
-var vd = validator.New()
 
 type YamlToJsonConfig struct {
 	IndentSize int    `json:"indent_size" validate:"required"`
@@ -14,7 +11,7 @@ type YamlToJsonConfig struct {
 }
 
 func (y YamlToJsonConfig) Validate() error {
-	err := vd.Struct(y)
+	err := validation.GetValidator().Struct(y)
 	if err != nil {
 		return err
 	}

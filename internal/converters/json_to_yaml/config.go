@@ -1,7 +1,6 @@
 package json_to_yaml
 
-type JsonToYamlConfig struct{}
+import "workhorse-core/internal/converters"
 
-func (j *JsonToYamlConfig) Validate() error {
-	return nil
-}
+// JsonToYamlConfig uses the shared NoOpConfig since no configuration is needed
+type JsonToYamlConfig = converters.NoOpConfig

@@ -2,6 +2,7 @@ package chain
 
 import (
 	"fmt"
+	"reflect"
 	"workhorse-core/internal/common/linked_list"
 	"workhorse-core/internal/converters"
 
@@ -21,13 +22,15 @@ type ConverterChainLink struct {
 
 func (cl *ConverterList) Validate() error {
 	if cl.Length() == 0 {
-		return fmt.Errorf("Converter list is empty")
+		return fmt.Errorf("converter chain is empty: cannot validate empty chain")
 	}
 	curr := cl.Head()
 	for curr != nil && curr.Next != nil {
 		nxt := curr.Next
 		if nxt.Value.InputType() != curr.Value.OutputType() {
-			return fmt.Errorf("Input type of converter %s does not match output type of converter %s", nxt.Value, curr.Value)
+			return fmt.Errorf("type mismatch in chain: converter '%s' outputs '%s' but next converter '%s' expects '%s'",
+				reflect.TypeOf(curr.Value).Elem().Name(), curr.Value.OutputType(),
+				reflect.TypeOf(nxt.Value).Elem().Name(), nxt.Value.InputType())
 		}
 		curr = nxt
 	}

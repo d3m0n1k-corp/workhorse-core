@@ -2,6 +2,7 @@ package json_stringify
 
 import (
 	"encoding/json"
+	"fmt"
 	"workhorse-core/internal/common/types"
 )
 
@@ -20,7 +21,10 @@ func (j *JsonStringifier) OutputType() string {
 }
 
 func (j *JsonStringifier) Apply(input any) (any, error) {
-	inp_str := input.(string)
+	inp_str, ok := input.(string)
+	if !ok {
+		return nil, fmt.Errorf("invalid input type: expected string, got %T", input)
+	}
 	var inp_json any
 	err := json.Unmarshal([]byte(inp_str), &inp_json)
 	if err != nil {

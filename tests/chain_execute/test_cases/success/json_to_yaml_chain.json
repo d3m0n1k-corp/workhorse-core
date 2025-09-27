@@ -1,0 +1,25 @@
+{
+    "name": "json_to_yaml_chain",
+    "description": "Chain: JSON prettify then convert to YAML",
+    "input": "{\"name\":\"test\",\"items\":[1,2,3]}",
+    "chain": [
+        {
+            "name": "json_prettifier",
+            "config_json": "{\"indent_type\":\"space\",\"indent_size\":2}"
+        },
+        {
+            "name": "json_to_yaml",
+            "config_json": "{}"
+        }
+    ],
+    "expected_responses": [
+        {
+            "output": "{\n  \"items\": [\n    1,\n    2,\n    3\n  ],\n  \"name\": \"test\"\n}",
+            "error": "<nil>"
+        },
+        {
+            "output": "items:\n    - 1\n    - 2\n    - 3\nname: test\n",
+            "error": "<nil>"
+        }
+    ]
+}

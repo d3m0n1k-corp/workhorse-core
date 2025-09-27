@@ -14,6 +14,6 @@ var _ = converters.Register(&converters.Registration{
 	InputType:   types.JSON,
 	OutputType:  types.JSON,
 	Constructor: func(config converters.BaseConfig) converters.BaseConverter {
-		return &JsonPrettifier{config: *config.(*JsonPrettifierConfig)}
+		return &JsonPrettifier{config: config.(JsonPrettifierConfig)}
 	},
 })

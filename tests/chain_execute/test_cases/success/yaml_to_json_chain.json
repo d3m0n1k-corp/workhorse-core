@@ -1,0 +1,25 @@
+{
+    "name": "yaml_to_json_chain",
+    "description": "Chain: YAML to JSON then prettify",
+    "input": "name: test\nvalue: 123\nitems:\n  - a\n  - b",
+    "chain": [
+        {
+            "name": "yaml_to_json",
+            "config_json": "{\"indent_size\":2,\"indent_type\":\"space\"}"
+        },
+        {
+            "name": "json_prettifier",
+            "config_json": "{\"indent_type\":\"tab\",\"indent_size\":1}"
+        }
+    ],
+    "expected_responses": [
+        {
+            "output": "{\n  \"items\": [\n    \"a\",\n    \"b\"\n  ],\n  \"name\": \"test\",\n  \"value\": 123\n}",
+            "error": "<nil>"
+        },
+        {
+            "output": "{\n\t\"items\": [\n\t\t\"a\",\n\t\t\"b\"\n\t],\n\t\"name\": \"test\",\n\t\"value\": 123\n}",
+            "error": "<nil>"
+        }
+    ]
+}

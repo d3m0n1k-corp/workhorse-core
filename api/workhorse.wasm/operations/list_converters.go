@@ -13,7 +13,7 @@ import (
 func ListConverters(this js.Value, args []js.Value) any {
 	connList := app.ListConverters()
 	logrus.Tracef("List of converters: %v", connList)
-	return jsOf(common.Response{
+	return common.JsOf(common.Response{
 		Result: connList,
 		Error:  nil,
 	})

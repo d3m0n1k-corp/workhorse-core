@@ -2,7 +2,7 @@ package converters
 
 import (
 	"encoding/json"
-	"errors"
+	"fmt"
 	"reflect"
 
 	"github.com/sirupsen/logrus"
@@ -20,6 +20,25 @@ type Registration struct {
 
 var registry = make(map[string]*Registration)
 
+// ResetRegistry clears all registered converters - for testing only
+func ResetRegistry() {
+	registry = make(map[string]*Registration)
+}
+
+// GetRegistrySize returns the number of registered converters - for testing only
+func GetRegistrySize() int {
+	return len(registry)
+}
+
+// GetRegistryKeys returns all registered converter names - for testing only
+func GetRegistryKeys() []string {
+	keys := make([]string, 0, len(registry))
+	for k := range registry {
+		keys = append(keys, k)
+	}
+	return keys
+}
+
 func Register(reg *Registration) any {
 	var _, exists = registry[reg.Name]
 	if exists {
@@ -34,7 +53,7 @@ func Register(reg *Registration) any {
 func GetRegistration(name string) (*Registration, error) {
 	val, ok := registry[name]
 	if !ok {
-		return nil, errors.New("Converter " + name + " not found")
+		return nil, fmt.Errorf("converter '%s' not found in registry", name)
 	}
 	return val, nil
 }
@@ -44,19 +63,29 @@ func NewConverter(name string, config_str string) (BaseConverter, error) {
 	if err != nil {
 		return nil, err
 	}
-	var instance = reflect.New(reg.Config).Interface()
-	err = json.Unmarshal([]byte(config_str), &instance)
+
+	// Create a pointer to the config struct type
+	configPtr := reflect.New(reg.Config)
+
+	// Unmarshal JSON into the pointer
+	err = json.Unmarshal([]byte(config_str), configPtr.Interface())
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to unmarshal config for converter '%s': %w", name, err)
 	}
 
-	config, ok := instance.(BaseConfig)
+	// Get the config value (dereference the pointer)
+	configValue := configPtr.Elem().Interface()
+
+	// Type assert to BaseConfig
+	config, ok := configValue.(BaseConfig)
 	if !ok {
-		return nil, errors.New("Invalid config type")
+		return nil, fmt.Errorf("config type assertion failed for converter '%s': expected BaseConfig, got %T", name, configValue)
 	}
+
+	// Validate the config
 	err = config.Validate()
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("config validation failed for converter '%s': %w", name, err)
 	}
 
 	return reg.Constructor(config), nil

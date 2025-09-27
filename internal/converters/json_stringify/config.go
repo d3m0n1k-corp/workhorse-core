@@ -1,8 +1,6 @@
 package json_stringify
 
-type JsonStringifierConfig struct {
-}
+import "workhorse-core/internal/converters"
 
-func (j JsonStringifierConfig) Validate() error {
-	return nil
-}
+// JsonStringifierConfig uses the shared NoOpConfig since no configuration is needed
+type JsonStringifierConfig = converters.NoOpConfig

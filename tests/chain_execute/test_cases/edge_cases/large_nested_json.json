@@ -1,0 +1,25 @@
+{
+    "name": "large_nested_json",
+    "description": "Edge case: Large nested JSON structure",
+    "input": "{\"users\":[{\"id\":1,\"name\":\"John\",\"profile\":{\"age\":30,\"skills\":[\"go\",\"wasm\",\"json\"]}},{\"id\":2,\"name\":\"Jane\",\"profile\":{\"age\":25,\"skills\":[\"yaml\",\"testing\"]}}]}",
+    "chain": [
+        {
+            "name": "json_prettifier",
+            "config_json": "{\"indent_type\":\"space\",\"indent_size\":2}"
+        },
+        {
+            "name": "json_to_yaml",
+            "config_json": "{}"
+        }
+    ],
+    "expected_responses": [
+        {
+            "output": "{\n  \"users\": [\n    {\n      \"id\": 1,\n      \"name\": \"John\",\n      \"profile\": {\n        \"age\": 30,\n        \"skills\": [\n          \"go\",\n          \"wasm\",\n          \"json\"\n        ]\n      }\n    },\n    {\n      \"id\": 2,\n      \"name\": \"Jane\",\n      \"profile\": {\n        \"age\": 25,\n        \"skills\": [\n          \"yaml\",\n          \"testing\"\n        ]\n      }\n    }\n  ]\n}",
+            "error": "<nil>"
+        },
+        {
+            "output": "users:\n    - id: 1\n      name: John\n      profile:\n        age: 30\n        skills:\n            - go\n            - wasm\n            - json\n    - id: 2\n      name: Jane\n      profile:\n        age: 25\n        skills:\n            - yaml\n            - testing\n",
+            "error": "<nil>"
+        }
+    ]
+}

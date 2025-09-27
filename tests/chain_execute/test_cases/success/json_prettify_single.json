@@ -1,0 +1,17 @@
+{
+    "name": "json_prettify_single",
+    "description": "Single converter: JSON prettify with spaces",
+    "input": "{\"name\":\"test\",\"value\":123}",
+    "chain": [
+        {
+            "name": "json_prettifier",
+            "config_json": "{\"indent_type\":\"space\",\"indent_size\":2}"
+        }
+    ],
+    "expected_responses": [
+        {
+            "output": "{\n  \"name\": \"test\",\n  \"value\": 123\n}",
+            "error": "<nil>"
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "name": "json_stringify_chain",
+    "description": "Chain: JSON prettify then stringify",
+    "input": "{\"test\":true,\"num\":42}",
+    "chain": [
+        {
+            "name": "json_prettifier",
+            "config_json": "{\"indent_type\":\"space\",\"indent_size\":4}"
+        },
+        {
+            "name": "json_stringify",
+            "config_json": "{}"
+        }
+    ],
+    "expected_responses": [
+        {
+            "output": "{\n    \"num\": 42,\n    \"test\": true\n}",
+            "error": "<nil>"
+        },
+        {
+            "output": "\"{\\\"num\\\":42,\\\"test\\\":true}\"",
+            "error": "<nil>"
+        }
+    ]
+}

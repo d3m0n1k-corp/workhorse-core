@@ -1,0 +1,16 @@
+{
+    "name": "type_mismatch_chain",
+    "description": "Error case: Type mismatch in chain - JSON to YAML then JSON prettifier",
+    "input": "{\"name\":\"test\",\"value\":123}",
+    "chain": [
+        {
+            "name": "json_to_yaml",
+            "config_json": "{}"
+        },
+        {
+            "name": "json_prettifier",
+            "config_json": "{\"indent_type\":\"space\",\"indent_size\":2}"
+        }
+    ],
+    "expected_validation_error": "type mismatch in chain: converter 'JsonToYamlConverter' outputs 'yaml' but next converter 'JsonPrettifier' expects 'json'"
+}

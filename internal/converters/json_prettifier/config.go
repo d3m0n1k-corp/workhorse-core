@@ -2,11 +2,8 @@ package json_prettifier
 
 import (
 	"fmt"
-
-	"github.com/go-playground/validator/v10"
+	"workhorse-core/internal/common/validation"
 )
-
-var vd = validator.New()
 
 type JsonPrettifierConfig struct {
 	IndentSize int    `json:"indent_size" validate:"required"`
@@ -14,7 +11,7 @@ type JsonPrettifierConfig struct {
 }
 
 func (j JsonPrettifierConfig) Validate() error {
-	err := vd.Struct(j)
+	err := validation.GetValidator().Struct(j)
 	if err != nil {
 		return err
 	}

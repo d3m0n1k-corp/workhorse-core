@@ -1,0 +1,17 @@
+{
+    "name": "invalid_yaml_input",
+    "description": "Error case: Invalid YAML input to yaml_to_json",
+    "input": "name: test\n  invalid: yaml: structure",
+    "chain": [
+        {
+            "name": "yaml_to_json",
+            "config_json": "{\"indent_size\":2,\"indent_type\":\"space\"}"
+        }
+    ],
+    "expected_responses": [
+        {
+            "output": null,
+            "error": "yaml: line 2: mapping values are not allowed in this context"
+        }
+    ]
+}

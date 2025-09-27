@@ -28,7 +28,7 @@ func ExecuteChain(chainLinks []chain.ConverterChainLink, input string) ([]*Chain
 	logrus.Trace("Converter list validated successfully")
 
 	head := cl.Head()
-	response := make([]*ChainResponse, cl.Length())
+	response := make([]*ChainResponse, 0, cl.Length()) // Pre-allocate capacity but start empty
 	chain_in := input
 	dbg_i := 0
 	for head != nil {
