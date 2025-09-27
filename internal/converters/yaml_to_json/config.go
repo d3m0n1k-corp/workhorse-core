@@ -2,6 +2,7 @@ package yaml_to_json
 
 import (
 	"fmt"
+	"workhorse-core/internal/common/data"
 	"workhorse-core/internal/common/validation"
 )
 
@@ -25,4 +26,17 @@ func (y YamlToJsonConfig) Validate() error {
 	}
 
 	return nil
+}
+
+// FormattingConfig interface implementation
+func (y YamlToJsonConfig) GetIndentType() string {
+	return y.IndentType
+}
+
+func (y YamlToJsonConfig) GetIndentSize() int {
+	return y.IndentSize
+}
+
+func (y YamlToJsonConfig) GetIndentString() string {
+	return data.GetIndentString(y.IndentType, y.IndentSize)
 }

@@ -2,6 +2,7 @@ package json_prettifier
 
 import (
 	"fmt"
+	"workhorse-core/internal/common/data"
 	"workhorse-core/internal/common/validation"
 )
 
@@ -25,4 +26,17 @@ func (j JsonPrettifierConfig) Validate() error {
 	}
 
 	return nil
+}
+
+// FormattingConfig interface implementation
+func (j JsonPrettifierConfig) GetIndentType() string {
+	return j.IndentType
+}
+
+func (j JsonPrettifierConfig) GetIndentSize() int {
+	return j.IndentSize
+}
+
+func (j JsonPrettifierConfig) GetIndentString() string {
+	return data.GetIndentString(j.IndentType, j.IndentSize)
 }

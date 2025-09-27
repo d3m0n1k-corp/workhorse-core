@@ -76,10 +76,22 @@ make lint      # Run golangci-lint
 
 ## Testing Conventions
 
+### Test Organization
+
+- **Unit Tests**: Files with `_test.go` suffix in the same package/directory as the code they test
+  - Examples: `converter_test.go`, `config_test.go` in converter directories
+  - Focus on single component/function behavior
+- **Integration/System Tests**: Located in `tests/` directory for project-level testing
+  - Examples: `tests/chain_execute/`, `tests/converter_list/`, `tests/benchmarks/`
+  - Include multi-component integration tests, black-box tests, benchmarks, and end-to-end tests
+
+### Test Implementation
+
 - Use `testify/assert` and `testify/require`
 - Mock external dependencies (e.g., `mockableJsonMarshalIndent` in json_prettifier)
 - Test both success and error paths for `Apply()` method
 - Validate type methods return correct constants
+- Benchmark tests should include memory allocation analysis (`-benchmem`)
 
 ## Error Handling
 
@@ -93,4 +105,5 @@ make lint      # Run golangci-lint
 - `internal/converters/json_prettifier/`: Complete converter example
 - `internal/chain/converter_list.go`: Chain execution logic
 - `api/workhorse.wasm/main.go`: WASM entry point and function registration
+- `tests/benchmarks/`: Performance benchmarks and optimization validation
 - `CONTRIBUTING.md`: Detailed contributor guide with examples
