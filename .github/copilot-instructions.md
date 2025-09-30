@@ -19,7 +19,7 @@ Workhorse is a Chrome extension backend that converts data between formats (JSON
 
 ### Key Components
 
-- **WASM API (`api/workhorse.wasm/`)**: Browser interface exposing three global functions: `list_converters`, `execute_converter`, `chain_execute`
+- **WASM API (`cmd/workhorse.wasm/`)**: Browser interface exposing three global functions: `list_converters`, `execute_converter`, `chain_execute`
 - **Converter Registry (`internal/converters/`)**: Plugin system where each converter implements `BaseConverter` interface
 - **Chain Execution (`internal/chain/`)**: Linked-list based pipeline for chaining multiple converters
 - **Auto-registration (`app/registrations.go`)**: Import-based converter registration using blank imports
@@ -104,6 +104,6 @@ make lint      # Run golangci-lint
 
 - `internal/converters/json_prettifier/`: Complete converter example
 - `internal/chain/converter_list.go`: Chain execution logic
-- `api/workhorse.wasm/main.go`: WASM entry point and function registration
+- `cmd/workhorse.wasm/main.go`: WASM entry point and function registration
 - `tests/benchmarks/`: Performance benchmarks and optimization validation
 - `CONTRIBUTING.md`: Detailed contributor guide with examples

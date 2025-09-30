@@ -28,7 +28,7 @@ workhorse-core/
 │   ├── workflows/
 │   │   ├── go.yml             # CI/CD for building & releasing
 │   │   └── cov.yml            # Code coverage configuration
-├── api/
+├── cmd/
 │   ├── cli/
 │   │   └── main.go            # CLI entrypoint
 │   └── workhorse.wasm/

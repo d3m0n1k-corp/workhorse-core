@@ -4,8 +4,8 @@ package main
 
 import (
 	"syscall/js"
-	"workhorse-core/api/workhorse.wasm/logging"
-	"workhorse-core/api/workhorse.wasm/operations"
+	"workhorse-core/cmd/workhorse.wasm/logging"
+	"workhorse-core/cmd/workhorse.wasm/operations"
 
 	"github.com/sirupsen/logrus"
 )

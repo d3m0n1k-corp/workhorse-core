@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"syscall/js"
-	"workhorse-core/api/workhorse.wasm/common"
 	"workhorse-core/app"
+	"workhorse-core/cmd/workhorse.wasm/common"
 
 	"github.com/sirupsen/logrus"
 )
