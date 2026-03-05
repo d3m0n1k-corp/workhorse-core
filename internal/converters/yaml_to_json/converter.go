@@ -3,13 +3,12 @@ package yaml_to_json
 import (
 	"encoding/json"
 	"fmt"
-	"strings"
 	"workhorse-core/internal/common/types"
 
 	"gopkg.in/yaml.v3"
 )
 
-var mockableJsonMarshalIndent = json.MarshalIndent
+var mockableJsonMarshal = json.Marshal
 
 type YamlToJsonConverter struct {
 	config YamlToJsonConfig
@@ -27,14 +26,7 @@ func (y *YamlToJsonConverter) Apply(input any) (any, error) {
 		return nil, err
 	}
 
-	var indent string
-	if y.config.IndentType == "space" {
-		indent = strings.Repeat(" ", y.config.IndentSize)
-	} else {
-		indent = strings.Repeat("\t", y.config.IndentSize)
-	}
-
-	out, err := mockableJsonMarshalIndent(data, "", indent)
+	out, err := mockableJsonMarshal(data)
 	if err != nil {
 		return nil, err
 	}

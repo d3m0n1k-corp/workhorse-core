@@ -1,16 +1,14 @@
 package json_prettifier
 
 import (
-	"fmt"
-
 	"github.com/go-playground/validator/v10"
 )
 
 var vd = validator.New()
 
 type JsonPrettifierConfig struct {
-	IndentSize int    `json:"indent_size" validate:"required"`
-	IndentType string `json:"indent_type" validate:"required,oneof=space tab"`
+	IndentSize int    `json:"indent_size" validate:"required" help:"Number of spaces or tabs for indentation"`
+	IndentType string `json:"indent_type" validate:"required,oneof=space tab" help:"Type of indentation"`
 }
 
 func (j JsonPrettifierConfig) Validate() error {
@@ -18,14 +16,5 @@ func (j JsonPrettifierConfig) Validate() error {
 	if err != nil {
 		return err
 	}
-
-	if j.IndentType == "space" && j.IndentSize%2 != 0 {
-		return fmt.Errorf("Indent size for space should be even")
-	}
-
-	if j.IndentType == "tab" && j.IndentSize != 1 {
-		return fmt.Errorf("Indent size for tab should be 1")
-	}
-
 	return nil
 }

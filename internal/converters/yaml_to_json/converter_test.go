@@ -32,11 +32,11 @@ func TestApply_whenUnmarshalFails_returnError(t *testing.T) {
 }
 
 func TestApply_whenJsonMarshalIndentFails_returnError(t *testing.T) {
-	mockableJsonMarshalIndent = func(_ any, _, _ string) ([]byte, error) {
+	mockableJsonMarshal = func(_ any) ([]byte, error) {
 		return nil, assert.AnError
 	}
 	defer func() {
-		mockableJsonMarshalIndent = json.MarshalIndent
+		mockableJsonMarshal = json.Marshal
 	}()
 	y := YamlToJsonConverter{}
 	_, err := y.Apply("a: 1")
@@ -44,17 +44,14 @@ func TestApply_whenJsonMarshalIndentFails_returnError(t *testing.T) {
 }
 
 func TestApply_whenValidInput_returnJsonString(t *testing.T) {
-	mockableJsonMarshalIndent = func(_ any, _, _ string) ([]byte, error) {
-		return []byte(`{"a": 1}`), nil
+	mockableJsonMarshal = func(_ any) ([]byte, error) {
+		return nil, assert.AnError
 	}
 	defer func() {
-		mockableJsonMarshalIndent = json.MarshalIndent
+		mockableJsonMarshal = json.Marshal
 	}()
 	y := YamlToJsonConverter{
-		config: YamlToJsonConfig{
-			IndentType: "space",
-			IndentSize: 2,
-		},
+		config: YamlToJsonConfig{},
 	}
 	out, err := y.Apply("a: 1")
 	require.NoError(t, err)
