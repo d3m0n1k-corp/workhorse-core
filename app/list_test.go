@@ -3,7 +3,7 @@ package app
 import (
 	"reflect"
 	"testing"
-	"workhorse-core/internal/converters"
+	"workhorse-core/internal/converters/base"
 
 	"github.com/stretchr/testify/require"
 )
@@ -42,8 +42,8 @@ func TestExtractConfTypes(t *testing.T) {
 
 func TestListConverters(t *testing.T) {
 
-	mockableListConverters = func() []*converters.Registration {
-		return []*converters.Registration{
+	mockableListConverters = func() []*base.Registration {
+		return []*base.Registration{
 			{
 				Name:        "name",
 				DemoInput:   1,

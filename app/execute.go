@@ -1,9 +1,9 @@
 package app
 
-import "workhorse-core/internal/converters"
+import "workhorse-core/internal/converters/base"
 
 func ExecuteConverter(name string, input string, config string) (any, error) {
-	conv, err := converters.NewConverter(name, config)
+	conv, err := base.NewConverter(name, config)
 	if err != nil {
 		return nil, err
 	}

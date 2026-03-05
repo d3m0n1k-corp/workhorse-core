@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
-	"workhorse-core/internal/converters"
+	"workhorse-core/internal/converters/base"
 )
 
-var mockableListConverters = converters.ListConverters
+var mockableListConverters = base.ListConverters
 
 type ItemConfig struct {
 	Type    string `json:"type"`

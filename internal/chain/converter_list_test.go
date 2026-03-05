@@ -3,7 +3,7 @@ package chain
 import (
 	"fmt"
 	"testing"
-	"workhorse-core/internal/converters"
+	"workhorse-core/internal/converters/base"
 
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
@@ -56,7 +56,7 @@ func TestNewConverterListFromJSON_whenNoChainLinks_returnError(t *testing.T) {
 }
 
 func TestNewConverterListFromJSON_whenProperChainLinks_returnConverterList(t *testing.T) {
-	mockableNewConverterFunc = func(name string, _ string) (converters.BaseConverter, error) {
+	mockableNewConverterFunc = func(name string, _ string) (base.BaseConverter, error) {
 		if name == "name1" {
 			return &MockConverter1{}, nil
 		}
@@ -82,7 +82,7 @@ func TestNewConverterListFromJSON_whenProperChainLinks_returnConverterList(t *te
 }
 
 func TestNewConverterListFromJSON_whenInvalidChainLinks_returnError(t *testing.T) {
-	mockableNewConverterFunc = func(name string, _ string) (converters.BaseConverter, error) {
+	mockableNewConverterFunc = func(name string, _ string) (base.BaseConverter, error) {
 		if name == "name1" {
 			return &MockConverter1{}, nil
 		}
@@ -104,7 +104,7 @@ func TestNewConverterListFromJSON_whenInvalidChainLinks_returnError(t *testing.T
 }
 
 func TestNewConverterListFromJSON_whenUnchainable_returnError(t *testing.T) {
-	mockableNewConverterFunc = func(name string, _ string) (converters.BaseConverter, error) {
+	mockableNewConverterFunc = func(name string, _ string) (base.BaseConverter, error) {
 		if name == "name1" {
 			return &MockConverter1{}, nil
 		}

@@ -16,7 +16,7 @@ func (j *JsonStringifier) InputType() string {
 }
 
 func (j *JsonStringifier) OutputType() string {
-	return types.JSON_STRINGIFIED
+	return types.STRING
 }
 
 func (j *JsonStringifier) Apply(input any) (any, error) {

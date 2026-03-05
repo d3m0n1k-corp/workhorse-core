@@ -44,16 +44,10 @@ func TestApply_whenJsonMarshalIndentFails_returnError(t *testing.T) {
 }
 
 func TestApply_whenValidInput_returnJsonString(t *testing.T) {
-	mockableJsonMarshal = func(_ any) ([]byte, error) {
-		return nil, assert.AnError
-	}
-	defer func() {
-		mockableJsonMarshal = json.Marshal
-	}()
 	y := YamlToJsonConverter{
 		config: YamlToJsonConfig{},
 	}
 	out, err := y.Apply("a: 1")
 	require.NoError(t, err)
-	require.Equal(t, `{"a": 1}`, out)
+	require.Equal(t, `{"a":1}`, out)
 }

@@ -16,7 +16,7 @@ func TestInputType(t *testing.T) {
 
 func TestOutputType(t *testing.T) {
 	JsonStringifier := JsonStringifier{}
-	require.Equal(t, types.JSON_STRINGIFIED, JsonStringifier.OutputType())
+	require.Equal(t, types.STRING, JsonStringifier.OutputType())
 }
 
 func TestApply_whenInvalidInput_returnError(t *testing.T) {

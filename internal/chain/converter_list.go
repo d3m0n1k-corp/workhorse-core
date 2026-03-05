@@ -3,15 +3,15 @@ package chain
 import (
 	"fmt"
 	"workhorse-core/internal/common/linked_list"
-	"workhorse-core/internal/converters"
+	"workhorse-core/internal/converters/base"
 
 	"github.com/sirupsen/logrus"
 )
 
-var mockableNewConverterFunc = converters.NewConverter
+var mockableNewConverterFunc = base.NewConverter
 
 type ConverterList struct {
-	linked_list.NonValidatedList[converters.BaseConverter]
+	linked_list.NonValidatedList[base.BaseConverter]
 }
 
 type ConverterChainLink struct {

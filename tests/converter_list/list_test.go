@@ -17,7 +17,7 @@ func TestListConverters(t *testing.T) {
 	files, err := os.ReadDir(fmt.Sprintf("%s/%s", prefix, directory))
 	folders := 0
 	for _, file := range files {
-		if file.IsDir() {
+		if file.IsDir() && file.Name() != "base" { // Exclude the 'base' folder
 			folders++
 		}
 	}
